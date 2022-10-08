@@ -1,6 +1,9 @@
 package com.gjara.inventory.views.list;
 
 import java.util.Collections;
+
+import javax.annotation.security.PermitAll;
+
 import com.gjara.inventory.data.entities.Product;
 import com.gjara.inventory.data.service.CrmService;
 import com.gjara.inventory.views.MainLayout;
@@ -14,6 +17,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+@PermitAll
 @Route(value="", layout = MainLayout.class)
 @PageTitle("Product List")
 public class ListView extends VerticalLayout{
@@ -102,9 +106,9 @@ public class ListView extends VerticalLayout{
         removeClassName("editing");
     }
 
-    private void addProduct(){
+    private void addProduct(Product product){
         grid.asSingleSelect().clear();
-        editProduct(new Product());
+        editProduct(product);
     }
 
     private void updateList(){

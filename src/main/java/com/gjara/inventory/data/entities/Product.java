@@ -1,37 +1,50 @@
 package com.gjara.inventory.data.entities;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-
 @Entity
+@Table(name = "products")
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
     @NotBlank
+    @Column(name = "name")
     private String name;
     @Nullable
+    @Column(name = "description")
     private String description;
     @Nullable
+    @Column(name = "quantity")
     private Double quantity;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    @NotNull
-    @JsonIgnoreProperties({"products"})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name="product_categories", joinColumns = {@JoinColumn(name="product_id", referencedColumnName="id", nullable=false, updatable=false)},
+    inverseJoinColumns = {@JoinColumn(name="category_id", referencedColumnName="id", nullable=false, updatable=false)})
     private Category category;
+
+    public Product(String name, String description, Double quantity) {
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+    }
 
     @Override
     public String toString() {

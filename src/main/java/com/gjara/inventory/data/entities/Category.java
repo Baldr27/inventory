@@ -1,21 +1,27 @@
 package com.gjara.inventory.data.entities;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.Formula;
 
 @Entity
-public class Category extends AbstractEntity {
+@Table(name = "categories")
+public class Category implements Serializable {
+    @Id
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> products = new LinkedList<>();
+    @OneToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    private Set<Product> products = new HashSet<>();
 
     @Formula("(select count(c.id) from Product c where c.category_id = id)")
     private int productCount; 
@@ -33,10 +39,10 @@ public class Category extends AbstractEntity {
     public void setName(String name){
         this.name = name;
     }
-    public List<Product> getProducts(){
+    public Set<Product> getProducts(){
         return products;
     }
-    public void setProducts(List<Product> products){
+    public void setProducts(Set<Product> products){
         this.products = products;
     }
     public int getProductCount(){

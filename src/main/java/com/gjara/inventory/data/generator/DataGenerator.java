@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.gjara.inventory.data.entities.Category;
 import com.gjara.inventory.data.entities.Product;
-import com.gjara.inventory.data.repository.CategoryRepository;
+import com.gjara.inventory.data.repository.ICategoryRepository;
 import com.gjara.inventory.data.repository.ProductRepository;
 import com.vaadin.exampledata.DataType;
 import com.vaadin.exampledata.ExampleDataGenerator;
@@ -22,7 +22,7 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 public class DataGenerator {
 
     @Bean
-    public CommandLineRunner loadData(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public CommandLineRunner loadData(ProductRepository productRepository, ICategoryRepository categoryRepository) {
 
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());

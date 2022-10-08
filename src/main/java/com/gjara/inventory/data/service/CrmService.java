@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.gjara.inventory.data.entities.Product;
-import com.gjara.inventory.data.repository.ProductRepository;
+import com.gjara.inventory.data.repository.IProductRepository;
 
 @Service
 public class CrmService {
     
-    private final ProductRepository productRepository;
+    private final IProductRepository productRepository;
 
-    public CrmService(ProductRepository productRepository) {
+    public CrmService(IProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
